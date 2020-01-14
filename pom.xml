@@ -1,95 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.stadler</groupId>
-    <artifactId>hibernate-tools-maven-plugin-sample</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+  <groupId>com.github.stadler</groupId>
+  <artifactId>hibernate-tools-maven-plugin-sample</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <java.version>1.8</java.version>
-        <h2.version>1.4.195</h2.version>
-        <hibernate-tools-maven-plugin.version>0.1.0</hibernate-tools-maven-plugin.version>
-    </properties>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.github.stadler</groupId>
-                <artifactId>hibernate-tools-maven-plugin</artifactId>
-                <version>${hibernate-tools-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>Display Help</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>help</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>Entity generation</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>hbm2java</goal>
-                        </goals>
-                        <configuration>
-                            <templatePath>${project.basedir}/src/main/resources/templates/</templatePath>
-                            <!-- Defaults: -->
-                            <!--<outputDirectory>${project.build.directory}/generated-sources/</outputDirectory>-->
-                            <!--<ejb3>false</ejb3>-->
-                            <!--<jdk5>false</jdk5>-->
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>Schema generation</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>hbm2ddl</goal>
-                        </goals>
-                        <configuration>
-                            <!-- Defaults:-->
-                            <!--Possible targetType: SCRIPT (default), STDOUT, DATABASE-->
-                            <!--<targetTypes>-->
-                            <!--<param>SCRIPT</param>-->
-                            <!--<param>STDOUT</param>-->
-                            <!--<param>DATABASE</param>-->
-                            <!--</targetTypes>-->
-                            <!--<outputDirectory>${project.build.directory}/generated-resources/</outputDirectory>-->
-                             <!--Possible schemaExportAction: CREATE (default), DROP, BOTH-->
-                            <!--<schemaExportAction>CREATE</schemaExportAction>-->
-                            <!--<outputFileName>schema.ddl</outputFileName>-->
-                            <!--<delimiter>;</delimiter>-->
-                            <!--<haltOnError>true</haltOnError>-->
-                            <!--<format>true</format>-->
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <revengFile>${project.basedir}/src/main/hibernate/hibernate.reveng.xml</revengFile>
-                    <!-- Defaults:-->
-                    <!--<packageName></packageName>-->
-                    <!--<configFile>${project.basedir}/src/main/hibernate/hibernate.cfg.xml</configFile>-->
-                    <!--<detectManyToMany>true</detectManyToMany>-->
-                    <!--<detectOneToOne>true</detectOneToOne>-->
-                    <!--<detectOptimisticLock>true</detectOptimisticLock>-->
-                    <!--<createCollectionForForeignKey>true</createCollectionForForeignKey>-->
-                    <!--<createManyToOneForForeignKey>true</createManyToOneForForeignKey>-->
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <!-- DB Driver of your choice -->
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${h2.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
-    </build>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+    <h2.version>1.4.200</h2.version>
+    <hibernate-tools-maven-plugin.version>0.1.1</hibernate-tools-maven-plugin.version>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.stadler</groupId>
+        <artifactId>hibernate-tools-maven-plugin</artifactId>
+        <version>${hibernate-tools-maven-plugin.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>2.3.2</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.2</version>
+          </dependency>
+          <dependency>
+            <!-- DB Driver of your choice -->
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>Display Help</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>help</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>Entity generation</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>hbm2java</goal>
+            </goals>
+            <configuration>
+              <ejb3>true</ejb3>
+              <jdk5>true</jdk5>
+            </configuration>
+          </execution>
+          <execution>
+            <id>Schema generation</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>hbm2ddl</goal>
+            </goals>
+            <configuration>
+              <delimiter>;</delimiter>
+              <haltOnError>true</haltOnError>
+              <format>true</format>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <revengFile>${project.basedir}/src/main/hibernate/hibernate.reveng.xml</revengFile>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
