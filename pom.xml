@@ -13,12 +13,12 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <h2.version>1.4.200</h2.version>
-    <hibernate-tools-maven-plugin.version>0.1.1</hibernate-tools-maven-plugin.version>
+    <hibernate-tools-maven-plugin.version>5.4.11.Final</hibernate-tools-maven-plugin.version>
   </properties>
   <build>
     <plugins>
       <plugin>
-        <groupId>com.github.stadler</groupId>
+        <groupId>org.hibernate</groupId>
         <artifactId>hibernate-tools-maven-plugin</artifactId>
         <version>${hibernate-tools-maven-plugin.version}</version>
         <dependencies>
@@ -73,6 +73,12 @@
         </executions>
         <configuration>
           <revengFile>${project.basedir}/src/main/hibernate/hibernate.reveng.xml</revengFile>
+          <configFile>${project.basedir}/src/main/hibernate/hibernate.cfg.xml</configFile>
+          <detectManyToMany>true</detectManyToMany>
+          <detectOneToOne>true</detectOneToOne>
+          <detectOptimisticLock>true</detectOptimisticLock>
+          <createCollectionForForeignKey>true</createCollectionForForeignKey>
+          <createManyToOneForForeignKey>true</createManyToOneForForeignKey>
         </configuration>
       </plugin>
     </plugins>
